@@ -33,7 +33,7 @@ func test_finds_inner_classes():
 	gr.tc.add_script(SCRIPTS_ROOT + 'has_inner_class.gd')
 	var found = false
 	for i in range(gr.tc.scripts.size()):
-		if(gr.tc.scripts[i].class_name == 'TestClass1'):
+		if(gr.tc.scripts[i].inner_class_name == 'TestClass1'):
 			found = true
 	assert_true(found, 'Should have the inner class in there')
 	assert_eq(gr.tc.scripts.size(), 2)
@@ -43,7 +43,7 @@ func test_can_change_test_class_prefix():
 	gr.tc.add_script(SCRIPTS_ROOT + 'has_inner_class.gd')
 	var found = false
 	for i in range(gr.tc.scripts.size()):
-		if(gr.tc.scripts[i].class_name == 'DifferentPrefixClass'):
+		if(gr.tc.scripts[i].inner_class_name == 'DifferentPrefixClass'):
 			found = true
 	assert_true(found, 'Should have the inner class in there')
 
@@ -52,14 +52,14 @@ func test_ignores_classes_that_match_but_do_not_extend_test():
 	gr.tc.add_script(SCRIPTS_ROOT + 'has_inner_class.gd')
 	var found = false
 	for i in range(gr.tc.scripts.size()):
-		if(gr.tc.scripts[i].class_name == 'DoesNot'):
+		if(gr.tc.scripts[i].inner_class_name == 'DoesNot'):
 			found = true
 	assert_false(found, 'Should have skipped, should see warning.')
 
 func test_inner_classes_have_tests():
 	gr.tc.add_script(SCRIPTS_ROOT + 'has_inner_class.gd')
 	for i in range(gr.tc.scripts.size()):
-		if(gr.tc.scripts[i].class_name == 'TestClass1'):
+		if(gr.tc.scripts[i].inner_class_name == 'TestClass1'):
 			assert_eq(gr.tc.scripts[i].tests.size(), 2)
 
 # also checks that only local methods are found since there is some extra
@@ -68,10 +68,10 @@ func test_inner_tests_are_found_using_test_prefix():
 	gr.tc.set_test_prefix('print_')
 	gr.tc.add_script(SCRIPTS_ROOT + 'has_inner_class.gd')
 	for i in range(gr.tc.scripts.size()):
-		if(gr.tc.scripts[i].class_name == 'TestClass1'):
+		if(gr.tc.scripts[i].inner_class_name == 'TestClass1'):
 			assert_eq(gr.tc.scripts[i].tests.size(), 1)
 
 func test_inner_tests_must_extend_test_to_be_used():
 	gr.tc.add_script(SCRIPTS_ROOT + 'has_inner_class.gd')
 	for i in range(gr.tc.scripts.size()):
-		assert_ne(gr.tc.scripts[i].class_name, 'TestDoesNotExtendTest')
+		assert_ne(gr.tc.scripts[i].inner_class_name, 'TestDoesNotExtendTest')

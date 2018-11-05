@@ -396,15 +396,15 @@ func _is_function_state(script_result):
 # Print out the heading for a new script
 # ------------------------------------------------------------------------------
 func _print_script_heading(script):
-	if(_does_class_name_match(_inner_class_name, script.class_name)):
+	if(_does_class_name_match(_inner_class_name, script.inner_class_name)):
 		p("\n/-----------------------------------------")
-		if(script.class_name == null):
+		if(script.inner_class_name == null):
 			p("Running Script " + script.path, 0)
 		else:
-			p("Running Class [" + script.class_name + "] in " + script.path, 0)
+			p("Running Class [" + script.inner_class_name + "] in " + script.path, 0)
 
-		if(_inner_class_name != null and _does_class_name_match(_inner_class_name, script.class_name)):
-			p(str('  [',script.class_name, '] matches [', _inner_class_name, ']'))
+		if(_inner_class_name != null and _does_class_name_match(_inner_class_name, script.inner_class_name)):
+			p(str('  [',script.inner_class_name, '] matches [', _inner_class_name, ']'))
 
 		if(_unit_test_name != ''):
 			p('  Only running tests like: "' + _unit_test_name + '"')
@@ -424,8 +424,8 @@ func _should_yield_now():
 		_yield_between.tests_since_last_yield += 1
 	return should
 
-func _does_class_name_match(class_name, script_class_name):
-	return class_name == null or (script_class_name != null and script_class_name.find(class_name) != -1)
+func _does_class_name_match(a_class_name, script_class_name):
+	return a_class_name == null or (script_class_name != null and script_class_name.find(a_class_name) != -1)
 # ------------------------------------------------------------------------------
 # Run all tests in a script.  This is the core logic for running tests.
 #
@@ -444,6 +444,7 @@ func _test_the_scripts():
 			_new_summary.add_script(the_script.get_full_name())
 
 		var test_script = the_script.get_new()
+		print(the_script.to_s())
 		test_script.gut = self
 		add_child(test_script)
 		_test_script_objects.append(test_script)
@@ -464,7 +465,7 @@ func _test_the_scripts():
 		# inner class is set and we do not have a match then empty the tests
 		# for the current test.
 		# !!!
-		if(!_does_class_name_match(_inner_class_name, the_script.class_name)):
+		if(!_does_class_name_match(_inner_class_name, the_script.inner_class_name)):
 			the_script.tests = []
 
 		_ctrls.test_progress.set_max(the_script.tests.size())
