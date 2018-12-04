@@ -28,7 +28,6 @@ popup_exclusive = false
 window_title = ""
 resizable = false
 script = ExtResource( 2 )
-_sections_unfolded = [ "Rect" ]
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }

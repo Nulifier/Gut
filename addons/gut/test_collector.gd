@@ -32,10 +32,8 @@ class TestScript:
 		var new_script = load(path)
 		var inst = null
 		if(inner_class_name != null):
-			print('Getting new script w/ inner:  ', get_full_name())
 			inst = new_script.get(inner_class_name).new()
 		else:
-			print('Getting new script:  ', get_full_name())
 			inst = new_script.new()
 		return inst
 
